@@ -38,7 +38,8 @@ const CakeUploadForm = () => {
 
     try {
       // 2. Send POST Request
-      const response = await fetch('http://localhost:5000/api/cakes/upload', {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${apiUrl}/api/cakes/upload`, {
         method: 'POST',
         body: formData, // Do NOT set Content-Type header; fetch does it for you
       });

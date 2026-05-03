@@ -2,6 +2,7 @@
   "name": "custom-cake-shop-root",
   "private": true,
   "scripts": {
+    "start": "cd server && npm install && node server.js",
     "build": "cd client && npm install && npm run build",
     "install": "cd client && npm install"
   }

@@ -16,8 +16,9 @@ const Home = () => {
 
   useEffect(() => {
     const fetchCakes = async () => {
+      const apiUrl = import.meta.env.VITE_API_URL;
       try {
-        const response = await fetch('http://localhost:5000/api/cakes');
+        const response = await fetch(`${apiUrl}/api/cakes`);
         if (!response.ok) {
           throw new Error('Failed to fetch cakes');
         }
@@ -80,9 +81,10 @@ const Home = () => {
                       style={{ height: '100%', '--swiper-navigation-color': '#fff', '--swiper-pagination-color': '#fff' }}
                     >
                       {cake.images.map((imagePath, index) => {
+                        const apiUrl = import.meta.env.VITE_API_URL;
                         const imageUrl = imagePath.startsWith('http') 
                           ? imagePath 
-                          : `http://localhost:5000${imagePath}`;
+                          : `${apiUrl}${imagePath}`;
                         
                         return (
                           <SwiperSlide key={index}>
