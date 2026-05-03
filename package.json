@@ -1,0 +1,8 @@
+{
+  "name": "custom-cake-shop-root",
+  "private": true,
+  "scripts": {
+    "build": "cd client && npm install && npm run build",
+    "install": "cd client && npm install"
+  }
+}
