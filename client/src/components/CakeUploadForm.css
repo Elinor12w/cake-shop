@@ -1,0 +1,111 @@
+.upload-container {
+  max-width: 600px;
+  margin: 4rem auto;
+  padding: 3rem;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  animation: fadeIn 0.8s ease-out;
+}
+
+.upload-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.upload-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+}
+
+.status-message {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.status-message.success {
+  background-color: #e6f4ea;
+  color: #1e7e34;
+}
+
+.status-message.error {
+  background-color: #fdeaea;
+  color: #c82333;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.upload-group {
+  margin-bottom: 1.5rem;
+}
+
+.upload-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.upload-input {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  transition: var(--transition);
+  background-color: #fcfcfc;
+}
+
+.upload-input:focus {
+  outline: none;
+  border-color: var(--primary-pink);
+  box-shadow: 0 0 0 4px rgba(244, 194, 194, 0.2);
+  background-color: var(--white);
+}
+
+.file-input-wrapper {
+  margin-top: 0.5rem;
+  padding: 2rem;
+  border: 2px dashed #e0e0e0;
+  border-radius: 12px;
+  text-align: center;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.file-input-wrapper:hover {
+  border-color: var(--primary-pink);
+  background-color: var(--primary-pink-light);
+}
+
+.upload-submit-btn {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background-color: var(--text-main);
+  color: var(--white);
+}
+
+.upload-submit-btn:hover {
+  background-color: #000;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .upload-container {
+    padding: 2rem 1.5rem;
+    margin: 2rem auto;
+  }
+}

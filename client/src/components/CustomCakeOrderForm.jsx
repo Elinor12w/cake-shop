@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import './CustomCakeOrderForm.css';
 
 const CustomCakeOrderForm = () => {
   const location = useLocation();
@@ -56,62 +57,44 @@ const CustomCakeOrderForm = () => {
     window.open(whatsappUrl, '_blank');
   };
 
-  const formContainerStyle = {
-    maxWidth: '800px',
-    margin: '4rem auto',
-    padding: '3rem',
-    backgroundColor: 'var(--white)',
-    borderRadius: 'var(--border-radius)',
-    boxShadow: 'var(--shadow)',
-  };
-
-  const inputStyle = {
-    width: '100%',
-    padding: '0.8rem',
-    marginTop: '0.5rem',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    fontFamily: 'var(--font-sans)',
-  };
-
   return (
     <div className="container">
-      <div style={formContainerStyle}>
-        <header style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Custom Cake Inquiry</h2>
-          <p style={{ color: 'var(--text-light)' }}>Complete the form to send us your order via WhatsApp.</p>
+      <div className="form-container">
+        <header className="form-header">
+          <h2>Custom Cake Inquiry</h2>
+          <p>Complete the form to send us your order via WhatsApp.</p>
         </header>
 
         <form onSubmit={handleSubmit}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
-            <div>
-              <label style={{ fontWeight: '600' }}>Your Name</label>
-              <input type="text" name="customerName" value={formData.customerName} onChange={handleChange} required style={inputStyle} />
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Your Name</label>
+              <input type="text" name="customerName" value={formData.customerName} onChange={handleChange} required className="form-input" />
             </div>
-            <div>
-              <label style={{ fontWeight: '600' }}>Phone Number</label>
-              <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required style={inputStyle} />
+            <div className="form-group">
+              <label>Phone Number</label>
+              <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required className="form-input" />
             </div>
           </div>
 
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ fontWeight: '600' }}>Selected Cake Style</label>
-            <input type="text" name="cakeType" value={formData.cakeType} onChange={handleChange} required style={inputStyle} placeholder="e.g. Wedding, Birthday, or specific model" />
+          <div className="form-group">
+            <label>Selected Cake Style</label>
+            <input type="text" name="cakeType" value={formData.cakeType} onChange={handleChange} required className="form-input" placeholder="e.g. Wedding, Birthday, or specific model" />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
-            <div>
-              <label style={{ fontWeight: '600' }}>Size</label>
-              <select name="size" value={formData.size} onChange={handleChange} style={inputStyle}>
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Size</label>
+              <select name="size" value={formData.size} onChange={handleChange} className="form-input">
                 <option value="Small">Small (6-8 portions)</option>
                 <option value="Medium">Medium (10-15 portions)</option>
                 <option value="Large">Large (20-25 portions)</option>
                 <option value="Tiered">Tiered / Event</option>
               </select>
             </div>
-            <div>
-              <label style={{ fontWeight: '600' }}>Base Flavor</label>
-              <select name="flavor" value={formData.flavor} onChange={handleChange} style={inputStyle}>
+            <div className="form-group">
+              <label>Base Flavor</label>
+              <select name="flavor" value={formData.flavor} onChange={handleChange} className="form-input">
                 <option value="Vanilla Bean">Vanilla Bean</option>
                 <option value="Double Chocolate">Double Chocolate</option>
                 <option value="Red Velvet">Red Velvet</option>
@@ -120,23 +103,23 @@ const CustomCakeOrderForm = () => {
             </div>
           </div>
 
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ fontWeight: '600' }}>Dietary Options</label>
-            <div style={{ display: 'flex', gap: '1.5rem', marginTop: '0.5rem' }}>
+          <div className="form-group">
+            <label>Dietary Options</label>
+            <div className="dietary-options">
               {['Gluten-Free', 'Vegan', 'Nut-Free'].map((dr) => (
-                <label key={dr} style={{ cursor: 'pointer' }}>
-                  <input type="checkbox" value={dr} onChange={handleDietaryChange} style={{ marginRight: '0.5rem' }} /> {dr}
+                <label key={dr} className="dietary-checkbox">
+                  <input type="checkbox" value={dr} onChange={handleDietaryChange} /> {dr}
                 </label>
               ))}
             </div>
           </div>
 
-          <div style={{ marginBottom: '2rem' }}>
-            <label style={{ fontWeight: '600' }}>Design Notes / Hebrew Inscriptions</label>
-            <textarea name="notes" value={formData.notes} onChange={handleChange} rows="4" style={inputStyle} placeholder="Add any specific details or the text you want on the cake..."></textarea>
+          <div className="form-group">
+            <label>Design Notes / Hebrew Inscriptions</label>
+            <textarea name="notes" value={formData.notes} onChange={handleChange} rows="4" className="form-input" placeholder="Add any specific details or the text you want on the cake..."></textarea>
           </div>
 
-          <button type="submit" className="btn-primary" style={{ width: '100%', padding: '1.2rem', fontSize: '1.2rem' }}>
+          <button type="submit" className="btn-primary form-submit-btn">
             Send Order via WhatsApp
           </button>
         </form>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './CakeUploadForm.css';
 
 const CakeUploadForm = () => {
   const [name, setName] = useState('');
@@ -6,11 +7,11 @@ const CakeUploadForm = () => {
   const [size, setSize] = useState('Medium');
   const [category, setCategory] = useState('Birthday');
   const [basePrice, setBasePrice] = useState(0);
-  const [images, setImages] = useState([]); // Changed to an array for multiple files
+  const [images, setImages] = useState([]); 
   const [message, setMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleImageChange = (e) => {
-    // Convert FileList to an Array
     setImages(Array.from(e.target.files));
   };
 
@@ -19,10 +20,10 @@ const CakeUploadForm = () => {
 
     if (images.length === 0) {
       setMessage('Please select at least one image.');
+      setIsSuccess(false);
       return;
     }
 
-    // 1. Prepare FormData
     const formData = new FormData();
     formData.append('name', name);
     formData.append('flavor', flavor);
@@ -30,123 +31,108 @@ const CakeUploadForm = () => {
     formData.append('category', category);
     formData.append('basePrice', basePrice);
     
-    // Iterate and append each image to the 'images' field
-    // The name 'images' MUST match upload.array('images') in the backend
     images.forEach((image) => {
       formData.append('images', image);
     });
 
     try {
-      // 2. Send POST Request
       const apiUrl = import.meta.env.VITE_API_URL;
       const response = await fetch(`${apiUrl}/api/cakes/upload`, {
         method: 'POST',
-        body: formData, // Do NOT set Content-Type header; fetch does it for you
+        body: formData,
       });
 
       const data = await response.json();
 
       if (response.ok) {
         setMessage('Cake and images uploaded successfully!');
-        console.log('Success:', data);
-        // Reset form
+        setIsSuccess(true);
         setName('');
         setFlavor('');
+        setBasePrice(0);
         setImages([]);
       } else {
         setMessage(`Upload failed: ${data.message}`);
+        setIsSuccess(false);
       }
     } catch (error) {
       console.error('Error uploading cake:', error);
       setMessage('Error connecting to the server.');
+      setIsSuccess(false);
     }
   };
 
-  const formStyle = {
-    maxWidth: '500px',
-    margin: '2rem auto',
-    padding: '2rem',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    backgroundColor: '#fff',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-  };
-
-  const inputGroupStyle = {
-    marginBottom: '1rem',
-    display: 'flex',
-    flexDirection: 'column'
-  };
-
   return (
-    <div style={formStyle}>
-      <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>Add New Cake</h2>
-      
-      {message && <p style={{ textAlign: 'center', color: message.includes('success') ? 'green' : 'red' }}>{message}</p>}
+    <div className="container">
+      <div className="upload-container">
+        <header className="upload-header">
+          <h2>Add New Creation</h2>
+        </header>
+        
+        {message && (
+          <div className={`status-message ${isSuccess ? 'success' : 'error'}`}>
+            {message}
+          </div>
+        )}
 
-      <form onSubmit={handleSubmit}>
-        <div style={inputGroupStyle}>
-          <label>Cake Name:</label>
-          <input 
-            type="text" 
-            value={name} 
-            onChange={(e) => setName(e.target.value)} 
-            required 
-            style={{ padding: '0.5rem' }}
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="upload-form">
+          <div className="upload-group">
+            <label>Cake Name</label>
+            <input 
+              type="text" 
+              value={name} 
+              onChange={(e) => setName(e.target.value)} 
+              required 
+              className="upload-input"
+              placeholder="e.g. Midnight Chocolate Dream"
+            />
+          </div>
 
-        <div style={inputGroupStyle}>
-          <label>Flavor:</label>
-          <input 
-            type="text" 
-            value={flavor} 
-            onChange={(e) => setFlavor(e.target.value)} 
-            required 
-            style={{ padding: '0.5rem' }}
-          />
-        </div>
+          <div className="upload-group">
+            <label>Primary Flavor</label>
+            <input 
+              type="text" 
+              value={flavor} 
+              onChange={(e) => setFlavor(e.target.value)} 
+              required 
+              className="upload-input"
+              placeholder="e.g. Belgian Dark Chocolate"
+            />
+          </div>
 
-        <div style={inputGroupStyle}>
-          <label>Base Price:</label>
-          <input 
-            type="number" 
-            value={basePrice} 
-            onChange={(e) => setBasePrice(e.target.value)} 
-            required 
-            style={{ padding: '0.5rem' }}
-          />
-        </div>
+          <div className="upload-group">
+            <label>Base Price ($)</label>
+            <input 
+              type="number" 
+              value={basePrice} 
+              onChange={(e) => setBasePrice(e.target.value)} 
+              required 
+              className="upload-input"
+            />
+          </div>
 
-        <div style={inputGroupStyle}>
-          <label>Select Local Images (Multiple):</label>
-          <input 
-            type="file" 
-            name="images"
-            accept="image/*" 
-            multiple 
-            onChange={handleImageChange} 
-            required 
-            style={{ marginTop: '0.5rem' }}
-          />
-        </div>
+          <div className="upload-group">
+            <label>Cake Images (Select Multiple)</label>
+            <div className="file-input-wrapper" onClick={() => document.getElementById('file-upload').click()}>
+              <p>{images.length > 0 ? `${images.length} images selected` : 'Click to select images'}</p>
+              <input 
+                id="file-upload"
+                type="file" 
+                name="images"
+                accept="image/*" 
+                multiple 
+                onChange={handleImageChange} 
+                required 
+                style={{ display: 'none' }}
+              />
+            </div>
+          </div>
 
-        <button 
-          type="submit" 
-          style={{ 
-            width: '100%', 
-            padding: '0.75rem', 
-            backgroundColor: '#007bff', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '4px',
-            cursor: 'pointer',
-            fontSize: '1rem'
-          }}
-        >
-          Upload Cake
-        </button>
-      </form>
+          <button type="submit" className="upload-submit-btn">
+            Publish to Menu
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

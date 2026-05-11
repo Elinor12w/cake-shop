@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Contact.css';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -31,46 +32,36 @@ const Contact = () => {
     window.open(whatsappUrl, '_blank');
   };
 
-  const containerStyle = {
-    maxWidth: '600px',
-    margin: '4rem auto',
-    padding: '3rem',
-    backgroundColor: 'var(--white)',
-    borderRadius: 'var(--border-radius)',
-    boxShadow: 'var(--shadow)',
-  };
-
-  const inputStyle = {
-    width: '100%',
-    padding: '0.8rem',
-    marginTop: '0.5rem',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    marginBottom: '1.5rem',
-  };
-
   return (
     <div className="container">
-      <div style={containerStyle}>
-        <h2 style={{ textAlign: 'center', marginBottom: '1rem', fontFamily: 'var(--font-serif)', fontSize: '2.5rem' }}>Contact Us</h2>
-        <p style={{ textAlign: 'center', color: 'var(--text-light)', marginBottom: '2rem' }}>
-          Have a question? Send us a message directly on WhatsApp.
-        </p>
+      <div className="contact-container">
+        <header className="contact-header">
+          <h2>Contact Us</h2>
+          <p>Have a question? Send us a message directly on WhatsApp.</p>
+        </header>
 
-        <form onSubmit={handleSubmit}>
-          <label style={{ fontWeight: '600' }}>Your Name</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} required style={inputStyle} />
+        <form onSubmit={handleSubmit} className="contact-form">
+          <div className="contact-group">
+            <label>Your Name</label>
+            <input type="text" name="name" value={formData.name} onChange={handleChange} required className="contact-input" placeholder="Full Name" />
+          </div>
 
-          <label style={{ fontWeight: '600' }}>Email Address</label>
-          <input type="email" name="email" value={formData.email} onChange={handleChange} required style={inputStyle} />
+          <div className="contact-group">
+            <label>Email Address</label>
+            <input type="email" name="email" value={formData.email} onChange={handleChange} required className="contact-input" placeholder="email@example.com" />
+          </div>
 
-          <label style={{ fontWeight: '600' }}>Subject</label>
-          <input type="text" name="subject" value={formData.subject} onChange={handleChange} required style={inputStyle} />
+          <div className="contact-group">
+            <label>Subject</label>
+            <input type="text" name="subject" value={formData.subject} onChange={handleChange} required className="contact-input" placeholder="How can we help?" />
+          </div>
 
-          <label style={{ fontWeight: '600' }}>Message</label>
-          <textarea name="message" value={formData.message} onChange={handleChange} required rows="5" style={inputStyle}></textarea>
+          <div className="contact-group">
+            <label>Message</label>
+            <textarea name="message" value={formData.message} onChange={handleChange} required rows="5" className="contact-input" placeholder="Tell us more about your request..."></textarea>
+          </div>
 
-          <button type="submit" className="btn-gold" style={{ width: '100%', padding: '1rem', fontSize: '1.1rem' }}>
+          <button type="submit" className="btn-gold contact-submit-btn">
             Chat on WhatsApp
           </button>
         </form>
